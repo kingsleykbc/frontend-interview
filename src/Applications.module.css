@@ -1,5 +1,39 @@
 .Applications {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	margin-bottom: 40px;
+}
+
+.ButtonSection,
+.LoadMoreMessage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 25px;
+	padding-top: 20px;
+}
+
+.LoadMoreMessage {
+	font-size: 0.9rem;
+	font-weight: 600;
+}
+
+.Status {
+	width: 100%;
+	width: max-content;
+	max-width: 100%;
+	margin: 30px auto;
+	text-align: center;
+}
+
+.Status p {
+	margin-top: 30px;
+	font-weight: 600;
+	font-size: 1.2rem;
+}
+
+.Status div {
+	font-size: 4rem;
 }

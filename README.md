@@ -1,4 +1,4 @@
-### Setup
+### Comments
 
 1. I couldn't write tests for the useApplications.ts hook because the renderHook testing library method isn't supported by this react version.
 

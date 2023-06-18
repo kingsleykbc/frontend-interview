@@ -20,6 +20,10 @@
 	font-weight: 600;
 }
 
+.LoadMoreButton {
+	padding-bottom: 30px;
+}
+
 .Status {
 	width: 100%;
 	width: max-content;

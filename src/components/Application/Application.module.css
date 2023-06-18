@@ -31,6 +31,7 @@
 .cell a {
 	text-decoration: none;
 	color: #246ac1;
+	word-break: break-all;
 }
 
 @media screen and (max-width: 1200px) {

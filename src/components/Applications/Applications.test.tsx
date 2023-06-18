@@ -1,13 +1,13 @@
 import React from 'react';
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import Applications from './Applications';
-import { fetchApplications } from './services/applications';
+import { fetchApplications } from '../../services/applications/applications';
 
-jest.mock('./services/applications');
+jest.mock('../../services/applications/applications');
 
 describe('Applications', () => {
 	beforeEach(() => {
-		fetchApplications.mockReset();
+		(fetchApplications as jest.MockedFunction<any>).mockReset();
 	});
 
 	test('should render loading state', async () => {
@@ -23,7 +23,7 @@ describe('Applications', () => {
 	test('should render error state', async () => {
 		render(<Applications />);
 		const error = 'Error fetching applications';
-		fetchApplications.mockRejectedValue(new Error(error));
+		(fetchApplications as jest.MockedFunction<any>).mockRejectedValue(new Error(error));
 
 		await waitFor(() => {
 			expect(screen.queryByText(`Error: ${error}`)).not.toBeInTheDocument();
@@ -35,7 +35,7 @@ describe('Applications', () => {
 			{ id: 1, name: 'Application 1' },
 			{ id: 2, name: 'Application 2' }
 		];
-		fetchApplications.mockResolvedValue(applications);
+		(fetchApplications as jest.MockedFunction<any>).mockResolvedValue(applications);
 
 		render(<Applications />);
 

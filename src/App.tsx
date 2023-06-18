@@ -1,6 +1,6 @@
 import './App.css';
-import Applications from './Applications';
-import Header from './Header';
+import Applications from './components/Applications/Applications';
+import Header from './components/Header/Header';
 
 function App() {
 	document.title = 'iwoca | Application Portal';

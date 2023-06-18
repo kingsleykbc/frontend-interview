@@ -24,6 +24,9 @@
         "web-vitals": "2.1.4"
     },
     "devDependencies": {
+        "@types/node": "^20.3.1",
+        "@types/react": "^18.2.12",
+        "@types/react-dom": "^18.2.5",
         "concurrently": "7.0.0"
     },
     "eslintConfig": {

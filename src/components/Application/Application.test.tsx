@@ -4,13 +4,17 @@ import Application from './Application';
 
 describe('Application component', () => {
 	const application = {
+		id: 1,
 		company: 'Example Company',
 		first_name: 'John',
 		last_name: 'Doe',
 		email: 'johndoe@example.com',
 		loan_amount: 5000,
-		date_created: new Date('2023-06-10'),
-		expiry_date: new Date('2023-06-20')
+		loan_type: 'Flexi-Loan',
+		avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/244.jpg',
+		date_created: new Date('2023-06-10').toISOString(),
+		expiry_date: new Date('2023-06-20').toISOString(),
+		loan_history: []
 	};
 
 	test('renders application details correctly', () => {
@@ -23,7 +27,7 @@ describe('Application component', () => {
 		const emailLabel = screen.getByText('Email');
 		const emailLink = screen.getByRole('link', { name: /johndoe@example\.com/i });
 		const loanAmountLabel = screen.getByText('Loan Amount');
-		const loanAmount = screen.getByText('5000');
+		const loanAmount = screen.getByText('£5,000.00');
 		const applicationDateLabel = screen.getByText('Application Date');
 		const applicationDate = screen.getByText('10-06-2023');
 		const expiryDateLabel = screen.getByText('Expiry date');

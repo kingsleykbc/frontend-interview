@@ -1,8 +1,12 @@
 import React from 'react';
-import LogoSvg from './logo.svg';
+import LogoSvg from '../../ui/LogoSvg/Logo.svg';
 import styles from './Header.module.css';
 
-const Header = () => {
+export type HeaderPropsType = {
+	className?: string;
+};
+
+const Header = ({ className }: HeaderPropsType) => {
 	return (
 		<div data-testid='header' className={styles.Header}>
 			<LogoSvg className={styles.logo} />

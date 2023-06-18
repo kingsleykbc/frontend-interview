@@ -1,35 +1,43 @@
 import React from 'react';
 import styles from './Application.module.css';
 import { formatDate } from '../../utils/dates/dates';
+import { ApplicationType } from '../../services/applications/applications';
+import { formatToGBP } from '../../utils/currency/currency';
 
-const Application = ({ application }) => {
+export interface ApplicationPropsType {
+	application: ApplicationType;
+}
+
+const Application = ({
+	application: { company, first_name, last_name, email, loan_amount, date_created, expiry_date }
+}: ApplicationPropsType) => {
 	return (
 		<div data-testid='application' className={styles.Application}>
 			<div className={styles.cell}>
 				<sub>Company</sub>
-				<span>{application.company}</span>
+				<span>{company}</span>
 			</div>
 			<div className={styles.cell}>
 				<sub>Name</sub>
 				<span>
-					{application.first_name} {application.last_name}
+					{first_name} {last_name}
 				</span>
 			</div>
 			<div className={styles.cell}>
 				<sub>Email</sub>
-				<a href={`mailto:${application.email}`}>{application.email}</a>
+				<a href={`mailto:${email}`}>{email}</a>
 			</div>
 			<div className={styles.cell}>
 				<sub>Loan Amount</sub>
-				<span>{application.loan_amount}</span>
+				<span>{formatToGBP(loan_amount)}</span>
 			</div>
 			<div className={styles.cell}>
 				<sub>Application Date</sub>
-				<span>{formatDate(application.date_created)}</span>
+				<span>{formatDate(date_created)}</span>
 			</div>
 			<div className={styles.cell}>
 				<sub>Expiry date</sub>
-				<span>{formatDate(application.expiry_date)}</span>
+				<span>{formatDate(expiry_date)}</span>
 			</div>
 		</div>
 	);

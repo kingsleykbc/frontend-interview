@@ -1,3 +1,15 @@
+### 18th - June Update
+
+1. Implemented the following areas of improvements 
+   - Converted code to TypeScript
+   - Cleaned up useApplications hook by using an enum to represent the different status
+   - Formatted the loan amount to currency.
+2. Implemented additional improvements:
+   - Wrote tests for utils
+   - Further cleaned up file structure
+   - Improved UX by scrolling down to display full loading message when the button is clicked
+   - Fixed email overflow issue by breaking long email addresses
+     
 ### Comments
 
 1. I couldn't write tests for the useApplications.ts hook because the renderHook testing library method isn't supported by this react version.

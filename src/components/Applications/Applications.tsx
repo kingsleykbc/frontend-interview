@@ -45,7 +45,9 @@ const Applications = () => {
 				)}
 				{hasMorePages && (
 					<div id='loadMore' className={styles.LoadMoreButton}>
-						<Button onClick={() => loadPage()}>Load more</Button>
+						<Button data-testid='loadMoreButton' onClick={() => loadPage()}>
+							Load more
+						</Button>
 					</div>
 				)}
 			</div>

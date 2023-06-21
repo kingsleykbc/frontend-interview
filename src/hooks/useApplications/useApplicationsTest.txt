@@ -1,0 +1,144 @@
+import { renderHook, act } from '@testing-library/react-hooks';
+import { fetchApplications } from '../../services/applications/applications';
+import { useApplications } from './useApplications';
+
+jest.mock('../../services/applications/applications');
+
+describe('useApplications', () => {
+  beforeEach(() => {
+    fetchApplications.mockClear();
+  });
+
+  it('fetches applications and updates state', async () => {
+    const applicationsMock = [
+      {
+        id: 1,
+        company: 'Company A',
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'john.doe@example.com',
+        loan_amount: 1000,
+        loan_type: 'Personal Loan',
+        date_created: '2023-06-20',
+        expiry_date: '2023-07-20',
+        avatar: 'avatar.jpg',
+        loan_history: [
+          {
+            loan_started: '2023-06-15',
+            loan_ended: '2023-06-30',
+            principle: 900,
+            interest_rate: 0.05,
+            interest: 50
+          }
+        ]
+      }
+    ];
+
+    fetchApplications.mockResolvedValueOnce(applicationsMock);
+
+    const { result, waitForNextUpdate } = renderHook(() => useApplications());
+
+    expect(result.current.status).toBe('loading');
+    expect(result.current.applications).toBeNull();
+    expect(result.current.page).toBe(1);
+
+    await waitForNextUpdate();
+
+    expect(fetchApplications).toHaveBeenCalledWith(1);
+    expect(result.current.applications).toEqual(applicationsMock);
+    expect(result.current.status).toBe('success');
+    expect(result.current.page).toBe(1);
+  });
+
+  it('handles error when fetching applications', async () => {
+    const errorMock = new Error('Failed to fetch applications');
+
+    fetchApplications.mockRejectedValueOnce(errorMock);
+
+    const { result, waitForNextUpdate } = renderHook(() => useApplications());
+
+    expect(result.current.status).toBe('loading');
+    expect(result.current.applications).toBeNull();
+    expect(result.current.page).toBe(1);
+
+    await waitForNextUpdate();
+
+    expect(fetchApplications).toHaveBeenCalledWith(1);
+    expect(result.current.applications).toBeNull();
+    expect(result.current.status).toBe('error');
+    expect(result.current.error).toBe(errorMock.message);
+    expect(result.current.page).toBe(1);
+  });
+
+  it('loads more applications when invoking loadPage', async () => {
+    const applicationsPage1Mock = [
+      {
+        id: 1,
+        company: 'Company A',
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'john.doe@example.com',
+        loan_amount: 1000,
+        loan_type: 'Personal Loan',
+        date_created: '2023-06-20',
+        expiry_date: '2023-07-20',
+        avatar: 'avatar.jpg',
+        loan_history: [
+          {
+            loan_started: '2023-06-15',
+            loan_ended: '2023-06-30',
+            principle: 900,
+            interest_rate: 0.05,
+            interest: 50
+          }
+        ]
+      }
+    ];
+
+    const applicationsPage2Mock = [
+      {
+        id: 2,
+        company: 'Company B',
+        first_name: 'Jane',
+        last_name: 'Smith',
+        email: 'jane.smith@example.com',
+        loan_amount: 2000,
+        loan_type: 'Business Loan',
+        date_created: '2023-06-19',
+        expiry_date: '2023-07-19',
+        avatar: 'avatar.jpg',
+        loan_history: [
+          {
+            loan_started: '2023-06-14',
+            loan_ended: '2023-06-29',
+            principle: 1800,
+            interest_rate: 0.06,
+            interest: 100
+          }
+        ]
+      }
+    ];
+
+    fetchApplications
+      .mockResolvedValueOnce(applicationsPage1Mock)
+      .mockResolvedValueOnce(applicationsPage2Mock);
+
+    const { result, waitForNextUpdate } = renderHook(() => useApplications());
+
+    await waitForNextUpdate();
+
+    expect(fetchApplications).toHaveBeenCalledWith(1);
+    expect(result.current.applications).toEqual(applicationsPage1Mock);
+    expect(result.current.page).toBe(1);
+
+    act(() => {
+      result.current.loadPage();
+    });
+
+    await waitForNextUpdate();
+
+    expect(fetchApplications).toHaveBeenCalledWith(2);
+    expect(result.current.applications).toEqual([...applicationsPage1Mock, ...applicationsPage2Mock]);
+    expect(result.current.page).toBe(2);
+  });
+});

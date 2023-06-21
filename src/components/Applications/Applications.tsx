@@ -1,7 +1,7 @@
 import React from 'react';
 import Application from '../Application/Application';
 import styles from './Applications.module.css';
-import useApplications, { ApplicationStatusType } from '../../hooks/useApplications/useApplications';
+import useApplications from '../../hooks/useApplications/useApplications';
 import { Button } from '../../ui/Button/Button';
 import Spinner from '../../ui/Spinner/Spinner';
 

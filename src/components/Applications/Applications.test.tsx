@@ -26,7 +26,7 @@ describe('Applications', () => {
 		(fetchApplications as jest.MockedFunction<any>).mockRejectedValue(new Error(error));
 
 		await waitFor(() => {
-			expect(screen.queryByText(`Error: ${error}`)).not.toBeInTheDocument();
+			expect(screen.getByText(/Error:/i)).toBeInTheDocument();
 		});
 	});
 
